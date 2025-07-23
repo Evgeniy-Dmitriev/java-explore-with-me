@@ -1,4 +1,4 @@
-package ru.practicum.ewmservice.config;
+package ru.practicum.main_service;
 
 import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.context.annotation.Bean;
