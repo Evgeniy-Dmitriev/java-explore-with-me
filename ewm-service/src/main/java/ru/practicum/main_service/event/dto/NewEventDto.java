@@ -39,11 +39,14 @@ public class NewEventDto {
     @Valid
     LocationDto location;
 
+    @Builder.Default
     boolean paid = false;
 
+    @Builder.Default
     @PositiveOrZero
     int participantLimit = 0;
 
+    @Builder.Default
     boolean requestModeration = true;
 
     @NotBlank

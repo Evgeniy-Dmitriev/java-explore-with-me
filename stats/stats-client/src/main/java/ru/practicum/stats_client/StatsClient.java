@@ -1,6 +1,7 @@
 package ru.practicum.stats_client;
 
 import lombok.extern.slf4j.Slf4j;
+import org.apache.hc.client5.http.impl.classic.HttpClientBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.web.client.RestTemplateBuilder;
@@ -22,7 +23,9 @@ public class StatsClient extends BaseClient {
     public StatsClient(@Value("${stats-server.url}") String serverUrl, RestTemplateBuilder builder) {
         super(builder
                 .uriTemplateHandler(new DefaultUriBuilderFactory(serverUrl))
-                .requestFactory(() -> new HttpComponentsClientHttpRequestFactory())
+                .requestFactory(() -> new HttpComponentsClientHttpRequestFactory(
+                        HttpClientBuilder.create().build()
+                ))
                 .build()
         );
     }

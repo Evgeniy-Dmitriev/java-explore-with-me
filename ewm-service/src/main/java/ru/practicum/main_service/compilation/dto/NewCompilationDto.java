@@ -20,6 +20,8 @@ public class NewCompilationDto {
     @Size(min = MainCommonUtils.MIN_LENGTH_TITLE, max = MainCommonUtils.MAX_LENGTH_TITLE)
     String title;
 
+    @Builder.Default
     boolean pinned = false;
+
     List<Long> events;
 }
