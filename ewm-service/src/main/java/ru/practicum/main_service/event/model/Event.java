@@ -67,4 +67,7 @@ public class Event {
 
     @Column(nullable = false)
     Boolean requestModeration;
+
+    @Column(nullable = false)
+    Long views = 0L;
 }

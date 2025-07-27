@@ -289,8 +289,15 @@ public class EventServiceImpl implements EventService {
         }
 
         statsService.addHit(request);
+        event.setViews(event.getViews() + 1);
+        Event updatedEvent = eventRepository.save(event);
 
-        return toEventFullDto(event);
+        Long confirmedRequests = statsService.getConfirmedRequests(Set.of(updatedEvent))
+                .getOrDefault(eventId, 0L);
+        Long viewsFromStats = statsService.getViews(Set.of(updatedEvent))
+                .getOrDefault(eventId, 0L);
+
+        return eventMapper.toEventFullDto(updatedEvent, confirmedRequests, updatedEvent.getViews());
     }
 
     @Override
@@ -316,27 +323,25 @@ public class EventServiceImpl implements EventService {
     public List <EventShortDto> toEventsShortDto(Set<Event> events) {
         log.info("Преобразование списка событий в EventShortDto {}", events);
 
-        Map<Long, Long> views = statsService.getViews(events);
         Map<Long, Long> confirmedRequests = statsService.getConfirmedRequests(events);
 
         return events.stream()
                 .map((event) -> eventMapper.toEventShortDto(
                         event,
                         confirmedRequests.getOrDefault(event.getId(), 0L),
-                        views.getOrDefault(event.getId(), 0L)))
+                        event.getViews()))
                 .sorted(Comparator.comparing(EventShortDto::getId))
                 .collect(Collectors.toList());
     }
 
     private List<EventFullDto> toEventsFullDto(Set<Event> events) {
-        Map<Long, Long> views = statsService.getViews(events);
         Map<Long, Long> confirmedRequests = statsService.getConfirmedRequests(events);
 
         return events.stream()
                 .map((event) -> eventMapper.toEventFullDto(
                         event,
                         confirmedRequests.getOrDefault(event.getId(), 0L),
-                        views.getOrDefault(event.getId(), 0L)))
+                        event.getViews()))
                 .sorted(Comparator.comparing(EventFullDto::getId))
                 .collect(Collectors.toList());
     }

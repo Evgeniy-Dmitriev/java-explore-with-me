@@ -21,6 +21,7 @@ public interface EventMapper {
     @Mapping(target = "category", source = "category")
     @Mapping(target = "location", source = "location")
     @Mapping(target = "publishedOn", expression = "java(null)")
+    @Mapping(target = "views", expression = "java(0L)")
     Event toEvent(NewEventDto newEventDto, User initiator, Category category, Location location, LocalDateTime createdOn,
                   EventState state);
 
