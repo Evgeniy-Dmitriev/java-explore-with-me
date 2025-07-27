@@ -68,6 +68,7 @@ public class Event {
     @Column(nullable = false)
     Boolean requestModeration;
 
+    @Builder.Default
     @Column(nullable = false)
     Long views = 0L;
 }
