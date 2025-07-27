@@ -25,7 +25,9 @@ public interface EventMapper {
     Event toEvent(NewEventDto newEventDto, User initiator, Category category, Location location, LocalDateTime createdOn,
                   EventState state);
 
+    @Mapping(target = "views", source = "views")
     EventFullDto toEventFullDto(Event event, Long confirmedRequests, Long views);
 
+    @Mapping(target = "views", source = "views")
     EventShortDto toEventShortDto(Event event, Long confirmedRequests, Long views);
 }

@@ -253,6 +253,11 @@ public class EventServiceImpl implements EventService {
             return List.of();
         }
 
+        events.forEach(event -> {
+            event.setViews(event.getViews() + 1);
+            eventRepository.save(event);
+        });
+
         Map<Long, Integer> eventsParticipantLimit = new HashMap<>();
         events.forEach(event -> eventsParticipantLimit.put(event.getId(), event.getParticipantLimit()));
 
@@ -272,8 +277,6 @@ public class EventServiceImpl implements EventService {
         } else if (needSort(sort, EventSortType.EVENT_DATE)) {
             sortedList.sort(Comparator.comparing(EventShortDto::getEventDate));
         }
-
-        statsService.addHit(request);
 
         return sortedList;
     }

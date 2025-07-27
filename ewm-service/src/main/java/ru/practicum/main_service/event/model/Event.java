@@ -70,5 +70,5 @@ public class Event {
 
     @Builder.Default
     @Column(nullable = false)
-    Long views = 0L;
+    private Long views = 0L;
 }
