@@ -1,5 +1,5 @@
 services:
-  stats:
+  stats-server:
     build: .stats/stats-service
     container_name: stats-server
     ports:
@@ -10,6 +10,7 @@ services:
       - spring.datasource.url=jdbc:postgresql://stats-db:5432/ewm-stats
       - spring.datasource.username=postgres
       - spring.datasource.password=12345
+      - server.port=9090
   stats-db:
     image: postgres:16.1
     container_name: stats-db
