@@ -26,7 +26,7 @@ public class EventCustomRepositoryImpl implements EventCustomRepository {
         Predicate criteria = builder.conjunction();
 
         if (users != null && !users.isEmpty()) {
-            criteria = builder.and(criteria, root.get("initiator").in(users));
+            criteria = builder.and(criteria, root.get("initiator").get("id").in(users));
         }
 
         if (states != null && !states.isEmpty()) {
@@ -34,7 +34,7 @@ public class EventCustomRepositoryImpl implements EventCustomRepository {
         }
 
         if (categories != null && !categories.isEmpty()) {
-            criteria = builder.and(criteria, root.get("category").in(categories));
+            criteria = builder.and(criteria, root.get("category").get("id").in(categories));
         }
 
         if (rangeStart != null) {
@@ -63,7 +63,7 @@ public class EventCustomRepositoryImpl implements EventCustomRepository {
         }
 
         if (categories != null && !categories.isEmpty()) {
-            criteria = builder.and(criteria, root.get("category").in(categories));
+            criteria = builder.and(criteria, root.get("category").get("id").in(categories));
         }
 
         if (paid != null) {

@@ -89,6 +89,17 @@ public class ErrorHandler {
                 LocalDateTime.now().format(MainCommonUtils.DT_FORMATTER));
     }
 
+    @ExceptionHandler(BadRequestException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ApiError handleBadRequestException(final BadRequestException exception) {
+        log.error(exception.toString());
+        return new ApiError(HttpStatus.BAD_REQUEST.name(),
+                "Incorrectly made request.",
+                exception.getMessage(),
+                getErrors(exception),
+                LocalDateTime.now().format(MainCommonUtils.DT_FORMATTER));
+    }
+
     @ExceptionHandler
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     public ApiError handleException(final Exception exception) {

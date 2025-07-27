@@ -52,7 +52,7 @@ public class CompilationServiceImpl implements CompilationService {
 
         Compilation compilation = getCompilationById(compId);
 
-        if (updateCompilationRequest.getTitle() != null && !updateCompilationRequest.getTitle().isBlank()) {
+        if (updateCompilationRequest.getTitle() != null) {
             compilation.setTitle(updateCompilationRequest.getTitle());
         }
 

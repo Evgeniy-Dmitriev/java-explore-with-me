@@ -4,6 +4,7 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
+import ru.practicum.main_service.MainCommonUtils;
 
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @Getter
@@ -13,7 +14,7 @@ import lombok.experimental.FieldDefaults;
 @ToString
 @Builder
 public class NewCategoryDto {
-    @Size(max = 255)
+    @Size(max = MainCommonUtils.MAX_LENGTH_CATEGORY_NAME)
     @NotBlank
     String name;
 }
