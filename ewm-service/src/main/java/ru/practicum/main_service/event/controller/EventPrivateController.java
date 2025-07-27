@@ -15,7 +15,6 @@ import ru.practicum.main_service.event.service.EventService;
 import ru.practicum.main_service.event.service.RequestService;
 
 import java.util.List;
-import java.util.Set;
 
 @RestController
 @RequiredArgsConstructor
@@ -27,10 +26,10 @@ public class EventPrivateController {
 
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
-    public Set<EventShortDto> getAllEventsByPrivate(
+    public List<EventShortDto> getAllEventsByPrivate(
             @PathVariable Long userId,
-            @RequestParam(required = false, defaultValue = MainCommonUtils.PAGE_DEFAULT_FROM) @PositiveOrZero Integer from,
-            @RequestParam(required = false, defaultValue = MainCommonUtils.PAGE_DEFAULT_SIZE) @Positive Integer size) {
+            @RequestParam(defaultValue = MainCommonUtils.PAGE_DEFAULT_FROM) @PositiveOrZero Integer from,
+            @RequestParam(defaultValue = MainCommonUtils.PAGE_DEFAULT_SIZE) @Positive Integer size) {
         return eventService.getAllEventsByPrivate(userId, PageRequest.of(from / size, size));
     }
 

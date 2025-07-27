@@ -45,7 +45,7 @@ public class EventCustomRepositoryImpl implements EventCustomRepository {
             criteria = builder.and(criteria, builder.lessThanOrEqualTo(root.get("eventDate"), rangeEnd));
         }
 
-        query.select(root).where(criteria);
+        query.select(root).where(criteria).orderBy(builder.asc(root.get("id")));
         return entityManager.createQuery(query).setFirstResult(from).setMaxResults(size).getResultStream().collect(Collectors.toSet());
     }
 
@@ -84,7 +84,7 @@ public class EventCustomRepositoryImpl implements EventCustomRepository {
 
         criteria = builder.and(criteria, root.get("state").in(EventState.PUBLISHED));
 
-        query.select(root).where(criteria);
+        query.select(root).where(criteria).orderBy(builder.asc(root.get("id")));
         return entityManager.createQuery(query).setFirstResult(from).setMaxResults(size).getResultStream().collect(Collectors.toSet());
     }
 }

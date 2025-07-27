@@ -40,7 +40,7 @@ public class CompilationServiceImpl implements CompilationService {
         }
 
         Compilation compilation = compilationRepository.save(compilationMapper.newDtoToCompilation(newCompilationDto, events));
-        Set<EventShortDto> eventsShortDto = eventService.toEventsShortDto(compilation.getEvents());
+        Set<EventShortDto> eventsShortDto = new HashSet<>(eventService.toEventsShortDto(compilation.getEvents()));
 
         return compilationMapper.toCompilationDto(compilation, eventsShortDto);
     }
@@ -69,7 +69,7 @@ public class CompilationServiceImpl implements CompilationService {
         }
 
         compilationRepository.save(compilation);
-        Set<EventShortDto> eventsShortDto = eventService.toEventsShortDto(compilation.getEvents());
+        Set<EventShortDto> eventsShortDto = new HashSet<>(eventService.toEventsShortDto(compilation.getEvents()));
 
         return compilationMapper.toCompilationDto(compilation, eventsShortDto);
     }
@@ -120,7 +120,7 @@ public class CompilationServiceImpl implements CompilationService {
 
         Compilation compilation = getCompilationById(compId);
 
-        Set<EventShortDto> eventsShortDto = eventService.toEventsShortDto(compilation.getEvents());
+        Set<EventShortDto> eventsShortDto = new HashSet<>(eventService.toEventsShortDto(compilation.getEvents()));
 
         return compilationMapper.toCompilationDto(compilation, eventsShortDto);
     }

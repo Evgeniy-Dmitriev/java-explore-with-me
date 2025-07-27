@@ -16,12 +16,12 @@ import java.util.List;
 import java.util.Set;
 
 public interface EventService {
-    Set<EventFullDto> getEventsByAdmin(List<Long> users, List<EventState> states, List<Long> categories,
+    List<EventFullDto> getEventsByAdmin(List<Long> users, List<EventState> states, List<Long> categories,
                                        LocalDateTime rangeStart, LocalDateTime rangeEnd, Integer from, Integer size);
 
     EventFullDto patchEventByAdmin(Long eventId, UpdateEventAdminRequest updateEventAdminRequest);
 
-    Set<EventShortDto> getAllEventsByPrivate(Long userId, Pageable pageable);
+    List<EventShortDto> getAllEventsByPrivate(Long userId, Pageable pageable);
 
     EventFullDto createEventByPrivate(Long userId, NewEventDto newEventDto);
 
@@ -39,5 +39,5 @@ public interface EventService {
 
     Set<Event> getEventsByIds(List<Long> eventsId);
 
-    Set<EventShortDto> toEventsShortDto(Set<Event> events);
+    List<EventShortDto> toEventsShortDto(Set<Event> events);
 }

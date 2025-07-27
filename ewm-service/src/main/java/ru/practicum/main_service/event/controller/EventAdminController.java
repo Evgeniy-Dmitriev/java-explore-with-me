@@ -16,7 +16,6 @@ import ru.practicum.main_service.event.service.EventService;
 
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Set;
 
 @RestController
 @RequiredArgsConstructor
@@ -27,7 +26,7 @@ public class EventAdminController {
 
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
-    public Set<EventFullDto> getEventsByAdmin(
+    public List<EventFullDto> getEventsByAdmin(
             @RequestParam(required = false) List<Long> users,
             @RequestParam(required = false) List<EventState> states,
             @RequestParam(required = false) List<Long> categories,

@@ -3,6 +3,7 @@ package ru.practicum.main_service.event.service;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -46,13 +47,15 @@ public class EventServiceImpl implements EventService {
     private final LocationMapper locationMapper;
 
     @Override
-    public Set<EventFullDto> getEventsByAdmin(List<Long> users, List<EventState> states, List<Long> categories,
+    public List<EventFullDto> getEventsByAdmin(List<Long> users, List<EventState> states, List<Long> categories,
                                               LocalDateTime rangeStart, LocalDateTime rangeEnd, Integer from, Integer size) {
         log.info("Вывод событий по запросу администратора с параметрами пользователей = {}, states = {}, categoriesId = {}, " +
                         "rangeStart = {}, rangeEnd = {}, from = {}, size = {}",
                 users, states, categories, rangeStart, rangeEnd, from, size);
 
         checkStartIsBeforeEnd(rangeStart, rangeEnd);
+
+        Pageable pageable = PageRequest.of(from / size, size);
 
         Set<Event> events = eventRepository.getEventsByAdmin(users, states, categories, rangeStart, rangeEnd, from, size);
 
@@ -128,7 +131,7 @@ public class EventServiceImpl implements EventService {
     }
 
     @Override
-    public Set<EventShortDto> getAllEventsByPrivate(Long userId, Pageable pageable) {
+    public List<EventShortDto> getAllEventsByPrivate(Long userId, Pageable pageable) {
         log.info("Вывод всех пользовательских событий с ID {} и пагинацией {}", userId, pageable);
 
         userService.getUserById(userId);
@@ -225,7 +228,7 @@ public class EventServiceImpl implements EventService {
             }
         }
 
-        if (updateEventUserRequest.getTitle() != null && updateEventUserRequest.getTitle().isBlank()) {
+        if (updateEventUserRequest.getTitle() != null && !updateEventUserRequest.getTitle().isBlank()) {
             event.setTitle(updateEventUserRequest.getTitle());
         }
 
@@ -253,13 +256,13 @@ public class EventServiceImpl implements EventService {
         Map<Long, Integer> eventsParticipantLimit = new HashMap<>();
         events.forEach(event -> eventsParticipantLimit.put(event.getId(), event.getParticipantLimit()));
 
-        Set<EventShortDto> eventsShortDto = toEventsShortDto(events);
+        List<EventShortDto> eventsShortDto = toEventsShortDto(events);
 
         if (onlyAvailable) {
             eventsShortDto = eventsShortDto.stream()
                     .filter(eventShort -> (eventsParticipantLimit.get(eventShort.getId()) == 0 ||
                             eventsParticipantLimit.get(eventShort.getId()) > eventShort.getConfirmedRequests()))
-                    .collect(Collectors.toSet());
+                    .collect(Collectors.toList());
         }
 
         List<EventShortDto> sortedList = new ArrayList<>(eventsShortDto);
@@ -310,7 +313,7 @@ public class EventServiceImpl implements EventService {
     }
 
     @Override
-    public Set<EventShortDto> toEventsShortDto(Set<Event> events) {
+    public List <EventShortDto> toEventsShortDto(Set<Event> events) {
         log.info("Преобразование списка событий в EventShortDto {}", events);
 
         Map<Long, Long> views = statsService.getViews(events);
@@ -321,10 +324,11 @@ public class EventServiceImpl implements EventService {
                         event,
                         confirmedRequests.getOrDefault(event.getId(), 0L),
                         views.getOrDefault(event.getId(), 0L)))
-                .collect(Collectors.toSet());
+                .sorted(Comparator.comparing(EventShortDto::getId))
+                .collect(Collectors.toList());
     }
 
-    private Set<EventFullDto> toEventsFullDto(Set<Event> events) {
+    private List<EventFullDto> toEventsFullDto(Set<Event> events) {
         Map<Long, Long> views = statsService.getViews(events);
         Map<Long, Long> confirmedRequests = statsService.getConfirmedRequests(events);
 
@@ -333,11 +337,12 @@ public class EventServiceImpl implements EventService {
                         event,
                         confirmedRequests.getOrDefault(event.getId(), 0L),
                         views.getOrDefault(event.getId(), 0L)))
-                .collect(Collectors.toSet());
+                .sorted(Comparator.comparing(EventFullDto::getId))
+                .collect(Collectors.toList());
     }
 
     private EventFullDto toEventFullDto(Event event) {
-        Set<EventFullDto> events = toEventsFullDto(Set.of(event));
+        List<EventFullDto> events = toEventsFullDto(Set.of(event));
         return events.iterator().next();
     }
 
