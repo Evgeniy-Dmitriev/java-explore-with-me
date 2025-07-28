@@ -12,5 +12,6 @@ import ru.practicum.main_service.event.enums.StateActionUser;
 @ToString
 @Builder(builderMethodName = "userBuilder")
 public class UpdateEventUserRequest extends UpdateEventRequest {
+
     StateActionUser stateAction;
 }

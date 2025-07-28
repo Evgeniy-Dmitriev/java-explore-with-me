@@ -15,9 +15,11 @@ import java.util.List;
 @ToString
 @Builder
 public class UpdateCompilationRequest {
+
     @Size(min = MainCommonUtils.MIN_LENGTH_COMPILATION_TITLE, max = MainCommonUtils.MAX_LENGTH_COMPILATION_TITLE)
     String title;
 
     Boolean pinned;
+
     List<Long> events;
 }

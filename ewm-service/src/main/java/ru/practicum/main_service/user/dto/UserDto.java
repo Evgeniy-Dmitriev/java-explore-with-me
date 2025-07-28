@@ -10,7 +10,10 @@ import lombok.experimental.FieldDefaults;
 @NoArgsConstructor
 @Builder
 public class UserDto {
+
     String email;
+
     Long id;
+
     String name;
 }

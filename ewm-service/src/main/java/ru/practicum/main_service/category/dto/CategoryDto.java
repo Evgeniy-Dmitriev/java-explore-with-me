@@ -15,7 +15,9 @@ import java.util.Objects;
 @NoArgsConstructor
 @Builder
 public class CategoryDto {
+
     Long id;
+
     @Size(max = MainCommonUtils.MAX_LENGTH_CATEGORY_NAME)
     @NotBlank
     String name;

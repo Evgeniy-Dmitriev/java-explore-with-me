@@ -15,6 +15,7 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @Builder
 public class Stats {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;

@@ -16,6 +16,7 @@ import java.util.List;
 @ToString
 @Builder
 public class NewCompilationDto {
+
     @NotBlank
     @Size(min = MainCommonUtils.MIN_LENGTH_COMPILATION_TITLE, max = MainCommonUtils.MAX_LENGTH_COMPILATION_TITLE)
     String title;

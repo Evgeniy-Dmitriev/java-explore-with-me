@@ -17,8 +17,11 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @Builder
 public class EventFullDto {
+
     String annotation;
+
     CategoryDto category;
+
     Long confirmedRequests;
 
     @JsonFormat(pattern = MainCommonUtils.DT_FORMAT, shape = JsonFormat.Shape.STRING)
@@ -30,16 +33,23 @@ public class EventFullDto {
     LocalDateTime eventDate;
 
     Long id;
+
     UserShortDto initiator;
+
     LocationDto location;
+
     Boolean paid;
+
     Integer participantLimit;
 
     @JsonFormat(pattern = MainCommonUtils.DT_FORMAT, shape = JsonFormat.Shape.STRING)
     LocalDateTime publishedOn;
 
     Boolean requestModeration;
+
     EventState state;
+
     String title;
+
     Long views;
 }

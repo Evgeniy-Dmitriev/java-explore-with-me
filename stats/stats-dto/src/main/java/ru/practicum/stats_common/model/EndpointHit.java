@@ -13,6 +13,7 @@ import java.util.Objects;
 @NoArgsConstructor
 @Builder
 public class EndpointHit {
+
     @NotBlank
     String app;
 

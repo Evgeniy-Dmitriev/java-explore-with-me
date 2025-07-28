@@ -14,6 +14,7 @@ import ru.practicum.main_service.MainCommonUtils;
 @ToString
 @Builder
 public class NewCategoryDto {
+
     @Size(max = MainCommonUtils.MAX_LENGTH_CATEGORY_NAME)
     @NotBlank
     String name;

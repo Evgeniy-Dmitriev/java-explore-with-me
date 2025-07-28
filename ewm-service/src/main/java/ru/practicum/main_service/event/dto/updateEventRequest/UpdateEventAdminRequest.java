@@ -12,5 +12,6 @@ import ru.practicum.main_service.event.enums.StateActionAdmin;
 @ToString
 @Builder(builderMethodName = "adminBuilder")
 public class UpdateEventAdminRequest extends UpdateEventRequest {
+
     StateActionAdmin stateAction;
 }

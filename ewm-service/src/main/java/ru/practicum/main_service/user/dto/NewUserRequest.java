@@ -15,6 +15,7 @@ import ru.practicum.main_service.MainCommonUtils;
 @ToString
 @Builder
 public class NewUserRequest {
+
     @Email
     @NotBlank
     @Size(min = MainCommonUtils.MIN_LENGTH_USER_EMAIL, max = MainCommonUtils.MAX_LENGTH_USER_EMAIL)

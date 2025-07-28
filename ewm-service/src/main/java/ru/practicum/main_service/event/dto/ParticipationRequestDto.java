@@ -16,8 +16,11 @@ import java.util.Objects;
 @NoArgsConstructor
 @Builder
 public class ParticipationRequestDto {
+
     Long id;
+
     Long event;
+
     Long requester;
 
     @JsonFormat(pattern = MainCommonUtils.DT_FORMAT, shape = JsonFormat.Shape.STRING)

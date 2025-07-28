@@ -12,8 +12,11 @@ import java.util.Objects;
 @NoArgsConstructor
 @Builder
 public class ViewStats {
+
     String app;
+
     String uri;
+
     Long hits;
 
     @Override
