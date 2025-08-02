@@ -7,7 +7,6 @@ import org.springframework.data.repository.query.Param;
 import ru.practicum.mainservice.comment.model.Comment;
 
 import java.util.List;
-import java.util.Map;
 
 public interface CommentRepository extends JpaRepository<Comment, Long> {
 
